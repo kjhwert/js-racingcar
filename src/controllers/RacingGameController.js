@@ -1,8 +1,8 @@
 import RacingGame from "../models/RacingGame.js";
 import RacingGameView from "../views/RacingGameView.js";
 import RACING_GAME from "../constants.js";
-import Car from "../models/Car.js";
 import { insertElement } from "../utils.js";
+import CarController from "./CarController.js";
 
 class RacingGameController {
   #RacingGame;
@@ -40,9 +40,9 @@ class RacingGameController {
       return;
     }
 
-    this.#RacingGame.Cars = carNames
+    this.#RacingGame.CarControllers = carNames
       .split(",")
-      .map((carName) => new Car(this.#RacingGameView.$racingSection, carName));
+      .map((carName) => new CarController(carName));
 
     this.#RacingGameView.onFinishInputCarNames();
     this.#RacingGameView.onStartInputRacingCount();
@@ -58,7 +58,7 @@ class RacingGameController {
       return;
     }
 
-    this.#RacingGame.racingCount = racingCount;
+    this.#RacingGame.racingCount = +racingCount;
     this.#onRacingStart();
   }
 
@@ -66,16 +66,16 @@ class RacingGameController {
     this.#RacingGameView.onFinishInputRacingCount();
 
     await Promise.all(
-      this.#RacingGame.Cars.map(async (car) => {
-        await car.onMovePer(this.#RacingGame.racingCount);
-      })
+      this.#RacingGame.CarControllers.map((Car) =>
+        Car.onMove(this.#RacingGame.racingCount)
+      )
     );
 
     this.#onRacingEnd();
   }
 
   #onRacingEnd() {
-    const winnersCarNames = this.#RacingGame.winnerCars
+    const winnersCarNames = this.#RacingGame.winnerCarControllers
       .map((Car) => Car.name)
       .join(", ");
 

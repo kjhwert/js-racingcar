@@ -1,10 +1,12 @@
 import RACING_GAME from "../../src/constants.js";
-import Car from "../../src/models/Car.js";
 
 const $carNamesInput = "#car-names-input";
 const $carNamesButton = "#car-names-button";
 const $racingCountInput = "#racing-count-input";
 const $racingCountButton = "#racing-count-button";
+const $racingSection = "#racing-section";
+
+import CarController from "../../src/controllers/CarController.js";
 
 describe("레이싱 게임", () => {
   let alertStub;
@@ -126,19 +128,25 @@ describe("레이싱 게임", () => {
   });
 
   context("자동차는 random 값이 4 이상인 경우 전진 가능하다.", () => {
-    const car = new Car("random");
-
     it("random 값이 4인 경우 전진 가능하다.", () => {
-      expect(car.isMovable(4)).to.be.true;
+      const Car = new CarController("carName");
+
+      expect(Car.isMovable(4)).to.be.true;
     });
     it("random 값이 9인 경우 전진 가능하다.", () => {
-      expect(car.isMovable(9)).to.be.true;
+      const Car = new CarController("carName");
+
+      expect(Car.isMovable(9)).to.be.true;
     });
     it("random 값이 0인 경우 전진 불가능하다.", () => {
-      expect(car.isMovable(0)).to.be.false;
+      const Car = new CarController("carName");
+
+      expect(Car.isMovable(0)).to.be.false;
     });
     it("random 값이 3인 경우 전진 불가능하다.", () => {
-      expect(car.isMovable(3)).to.be.false;
+      const Car = new CarController("carName");
+
+      expect(Car.isMovable(3)).to.be.false;
     });
   });
 });

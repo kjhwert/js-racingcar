@@ -1,27 +1,30 @@
 class RacingGame {
-  #Cars = [];
+  #CarControllers = [];
   #racingCount = 0;
   constructor() {}
 
   init() {
     this.racingCount = 0;
-    this.Cars = [];
+    this.CarControllers = [];
   }
 
-  get Cars() {
-    return this.#Cars;
+  get CarControllers() {
+    return this.#CarControllers;
   }
 
-  set Cars(Cars) {
-    this.#Cars = Cars;
+  set CarControllers(CarControllers) {
+    this.#CarControllers = CarControllers;
   }
 
-  get winnerCars() {
-    const movementResults = this.#Cars.map((Car) => Car.movementResult);
+  get winnerCarControllers() {
+    const movementResults = this.#CarControllers.map(
+      (CarController) => CarController.movement
+    );
+
     const winnerMovementCount = Math.max(...movementResults);
 
-    return this.#Cars.filter(
-      (Car) => Car.movementResult === winnerMovementCount
+    return this.#CarControllers.filter(
+      (CarController) => CarController.movement === winnerMovementCount
     );
   }
 
