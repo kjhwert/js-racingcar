@@ -18,19 +18,16 @@ class RacingGameController {
   #subscribeEvents() {
     this.#RacingGameView.$racingGameForm.addEventListener(
       "submit",
-      this.#onSubmitRacingCount.bind(this)
+      this.#onSubmitRacingCount
     );
     this.#RacingGameView.$carNamesButton.addEventListener(
       "click",
-      this.#onSubmitCarNames.bind(this)
+      this.#onSubmitCarNames
     );
-    this.#RacingGameView.$resetButton.addEventListener(
-      "click",
-      this.#onClear.bind(this)
-    );
+    this.#RacingGameView.$resetButton.addEventListener("click", this.#onClear);
   }
 
-  #onSubmitCarNames(e) {
+  #onSubmitCarNames = (e) => {
     e.preventDefault();
 
     const carNames = this.#RacingGameView.$carNamesInput.value;
@@ -46,9 +43,9 @@ class RacingGameController {
 
     this.#RacingGameView.onFinishInputCarNames();
     this.#RacingGameView.onStartInputRacingCount();
-  }
+  };
 
-  #onSubmitRacingCount(e) {
+  #onSubmitRacingCount = (e) => {
     e.preventDefault();
 
     const racingCount = this.#RacingGameView.$racingCountInput.value;
@@ -60,7 +57,7 @@ class RacingGameController {
 
     this.#RacingGame.racingCount = +racingCount;
     this.#onRacingStart();
-  }
+  };
 
   async #onRacingStart() {
     this.#RacingGameView.onFinishInputRacingCount();
@@ -85,11 +82,11 @@ class RacingGameController {
     this.#RacingGameView.showElement(this.#RacingGameView.$winnerSection);
   }
 
-  #onClear() {
+  #onClear = () => {
     this.#RacingGame.init();
     this.#RacingGameView.init();
     this.#RacingGameView.$racingGameForm.reset();
-  }
+  };
 
   isCarNamesCorrectlyRegistered(carNames) {
     return carNames.split(",").every((carName) => {
